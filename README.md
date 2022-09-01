@@ -1,6 +1,7 @@
 ## ik-moneywash
 
 Wash your black money and turn it into legal money.
+
 For help, questions and other free scripts join us in discord: [Hi-Dev](https://discord.com/invite/pSJPPctrNx)
 
 - Built in system that counts all markedbills together with worth
