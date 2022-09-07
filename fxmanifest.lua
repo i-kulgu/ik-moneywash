@@ -1,6 +1,6 @@
 fx_version 'cerulean'
 author "Proportions#8460"
-version "v1.0"
+version "v1.1"
 description "Money washing script"
 game "gta5"
 
