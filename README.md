@@ -1,5 +1,7 @@
 ## ik-moneywash
 
+If you like my work and want to support me : [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F2F3EU9ME)
+
 Wash your black money and turn it into legal money.
 
 For help, questions and other free scripts join us in discord: [Hi-Dev](https://discord.com/invite/pSJPPctrNx)
