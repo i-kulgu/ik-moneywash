@@ -5,21 +5,21 @@ local bagModel = "prop_ld_case_01"
 local baganimDict = "missheistdocksprep1hold_cellphone"
 local baganimName = "hold_cellphone"
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	RequestModel(GetHashKey(bagModel))
 	while not HasModelLoaded(GetHashKey(bagModel)) do
-		Citizen.Wait(100)
+		Wait(100)
 	end
 	while not HasAnimDictLoaded(baganimDict) do
 		RequestAnimDict(baganimDict)
-		Citizen.Wait(100)
+		Wait(100)
 	end
 	QBCore.Functions.TriggerCallback('ik-moneywash:server:pedcoords', function(pedloc)
-		RequestModel(Config.pedmodel) while not HasModelLoaded(Config.pedmodel) do Citizen.Wait(1) end
+		RequestModel(Config.pedmodel) while not HasModelLoaded(Config.pedmodel) do Wait(1) end
 		pedman = CreatePed(0, Config.pedmodel , pedloc.x, pedloc.y, pedloc.z, pedloc.w, false, false)
 		SetEntityInvincible(pedman, true)
 		bagspawned = CreateObject(GetHashKey(bagModel), pedloc.x +2, pedloc.y+2, pedloc.z, 1, 1, 1)
-		Citizen.Wait(1000)
+		Wait(1000)
         local netid = ObjToNet(bagspawned)
 		SetNetworkIdExistsOnAllMachines(netid, true)
         NetworkSetNetworkIdDynamic(netid, true)
