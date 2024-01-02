@@ -1,11 +1,12 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local PedLocation
 
 -- ########## Ped Coordinates ########## --
 
 local hiddenped = {["coords"] = {
-    [1] = vector4(145.1, 311.59, 111.14, 122.84)
-    -- [1] = vector4(139.12, 324.15, 111.14, 113.1),
-    -- [2] = vector4(145.1, 311.59, 111.14, 122.84)
+    [1] = vector4(145.1, 311.59, 111.14, 122.84),
+    -- [2] = vector4(139.12, 324.15, 111.14, 113.1),
+    -- [3] = vector4(145.1, 311.59, 111.14, 122.84)
 }}
 
 -- ########## Functions ########## --
@@ -37,26 +38,21 @@ local function WashMarkedBills(balance, price)
         Player.Functions.RemoveItem("markedbills", 1, false)
         Player.Functions.AddItem("markedbills", 1 , false ,info)
 
-        Player.Functions.AddMoney("cash",netprice)
-        TriggerClientEvent('QBCore:Notify', source, "Washed $"..price.." black money and got $"..netprice.." back!")
+        Player.Functions.AddMoney("cash", netprice)
+        TriggerClientEvent('QBCore:Notify', source, Lang:t('info.washed_money', { price = price, netprice = netprice}))
     else
         Player.Functions.RemoveItem("markedbills", 1, false)
-        Player.Functions.AddMoney("cash",netprice)
+        Player.Functions.AddMoney("cash", netprice)
     end
 end
 
 -- ########## Callbacks ########## --
 
 QBCore.Functions.CreateCallback('ik-moneywash:server:pedcoords', function(source, cb)
-    local r = math.random(1,#hiddenped["coords"])
-    for _,v in pairs(hiddenped) do
-        pedloc = v[r]
-    end
-    cb(pedloc)
+    cb(PedLocation)
 end)
 
 -- ########## Events ########## --
-
 RegisterNetEvent("ik-moneywash:server:sellthem",function(amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local TotalAmount = tonumber(amount)
@@ -71,11 +67,17 @@ RegisterNetEvent("ik-moneywash:server:sellthem",function(amount)
         else
 			local netprice = math.floor(amount * Config.Percentage)
             if Player.Functions.RemoveItem(Config.BlackMoneyName, TotalAmount) then
-                Player.Functions.AddMoney("cash",netprice)
-                TriggerClientEvent('QBCore:Notify', source, "Washed $"..amount.." black money and got $"..netprice.." back!")
+                Player.Functions.AddMoney("cash", netprice)
+                TriggerClientEvent('QBCore:Notify', source, Lang:t('info.washed_money', { price = amount, netprice = netprice }) )
             end
         end
     else
-        TriggerClientEvent('QBCore:Notify', source, "You don't have that much blackmoney on you!", 'error')
+        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.no_black_money'), 'error')
     end
+end)
+
+AddEventHandler('onResourceStart', function(resource)
+    if resource ~= GetCurrentResourceName() then return end
+    local random = math.random(#hiddenped["coords"])
+    PedLocation = hiddenped['coords'][random]
 end)

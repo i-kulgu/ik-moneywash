@@ -1,9 +1,16 @@
 fx_version 'cerulean'
-author "Proportions#8460"
-version "v1.1"
-description "Money washing script"
 game "gta5"
 
-shared_scripts {'config.lua'}
-client_scripts {'client.lua'}
-server_scripts {'server.lua'}
+lua54 'yes'
+
+author "Proportions#8460"
+description "Money washing script"
+version "v1.2"
+
+shared_scripts {
+    '@qb-core/shared/locale.lua',
+    'config.lua',
+    'locales/*.lua',
+}
+client_script 'client.lua'
+server_script 'server.lua'
